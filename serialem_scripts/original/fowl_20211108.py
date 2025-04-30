@@ -440,6 +440,11 @@ class fowl_acquisition_area:
             else:
                 print("Unreliable defocus, defocusing by 0.03")
                 serialem.ChangeFocus(-0.03)
+            
+            microscope_defocus_setting = serialem.ReportDefocus()
+            if abs(microscope_defocus_setting) > 3:
+                print(f"Defocus {microscope_defocus_setting} is too large, resetting defocus")
+                serialem.SetDefocus(-3)
         
 
     def perform_defocus_calibration(self, tilt, use_existing_tilt=False):
